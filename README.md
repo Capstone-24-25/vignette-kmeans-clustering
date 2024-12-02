@@ -1,8 +1,7 @@
-# vignette-transformers
+# vignette-kmeans-clustering
 **Contributers:** Sophia Mirrashidi, Leena Anqud, Nazhah Mir, Hannah Kim
 
-Conceptual explanation of transformer models and a simple example.
-
+Conceptual explanation and practical example of kmeans clustering. 
 
 ## Abstract
 
