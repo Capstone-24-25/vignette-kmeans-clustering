@@ -4,23 +4,81 @@ format: html
 editor: visual
 ---
 
-## Quarto
+## Information for README
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+1.  One-sentence description:
 
-## Running Code
+    > *Vignette on implementing k-means clustering using \_\_\_\_ data; created as a class project for PSTAT197A in Fall 2024.*
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+2.  Contributors: Sophia Mirrashidi, Leena Anqud, Nazhah Mir, Hannah Kim
 
-```{r}
-1 + 1
-```
+3.  Vignette abstract: a brief description in a few sentences of your vignette topic, example data, and outcomes.
 
-You can add options to executable code like this
+4.  Repository contents: scripts (draft), data (), README.md, vignette.qmd
 
-```{r}
-#| echo: false
-2 * 2
-```
+5.  Reference list: 2 or more references to learn more about your topic.
 
-The `echo: false` option disables the printing of code (only output is displayed).
+A typical README file would also contain instructions on use and instructions on contributing to the repository.
+
+## Information of k-means clustering:
+
+**Source 1**: PSTAT131 slides
+
+Clustering: dividing data into unknown groups
+
+-   k-means clustering: dividing observations into specified number of groups where k equals number of groups
+
+    -   minimize the variation within each cluster for a good fit
+
+Use cases: pre-processing,
+
+**Source 2**: <https://www.ibm.com/topics/k-means-clustering>
+
+Partitions in k-means clustering determined by distance between centroids
+
+-   Centroid: center of cluster, mean/median of all points within cluster
+
+-   Data points fall into a certain cluster based on the mathematical distance measurement from the center
+
+<!-- -->
+
+-   k-means form of unsupervised learning, so split into groups is unlabelled/unclassified/unknown
+
+Large k: larger number of clusters, smaller amount of data points in each cluster, more detailed information about cluster
+
+Smaller k: less number of clusters, greater amount of data points in each cluster, less details regarding data per cluster
+
+K-means clustering process:
+
+1.  initialize K: set k equal to the number of clusters desired
+2.  Assign centroids:
+    1.  Expectation step: assign data points to closest centroid based on predetermined measurement of distance
+    2.  Maximization step: reassigns center of cluster based on mean of data points in cluster
+    3.  Expectation and maximization steps repeat until we reach convergence
+
+Evaluation metrics:
+
+1.  Minimize intracluster distance
+2.  Maximize intercluster distance
+
+This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters. A good k-means clustering algorithm has clusters that are "compact and isolated" from each other.
+
+Use Cases: market segmentation, document clustering, image segmentation, image compression, recommendation engines
+
+Benefits: works well with machine learning data that is numeric with few dimensions and can be easily proportioned, enhances performance of machine learning tasks, simple, fast, scalable
+
+Drawbacks: sensitive to outliers, dependence on input parameters, difficulty working with high dimension/variation data
+
+**Source 3:**
+
+## Outline of Code Implementation
+
+Potential dataset:
+
+Process:
+
+Goal:
+
+Outcome:
+
+Impact of k-means clustering:
