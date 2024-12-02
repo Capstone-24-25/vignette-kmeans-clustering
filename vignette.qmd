@@ -1,4 +1,82 @@
 # K-Means Clustering: Conceptual Overview
 
-# Practical Example
 
+
+this is code for a manually implemented k-means alogirhtm. do not have to use if do not want to, but could be useful for explaining the algorithm? not sure tbh j wanted to give the option
+```{python}
+class kMeans():
+    def __init__(self, K, X):
+        self.K = K
+        self.centroids = X[np.random.choice(X.shape[0], size=K, replace=False)]
+        self.assignments = np.zeros(X.shape[0], dtype=int)
+        self.X = X
+
+    def update_centroids(self, closest_centroids):
+        X_grouped = [self.X[closest_centroids == idx] for idx in range(len(self.centroids))]
+        self.centroids = [X.mean(axis=0) for X in X_grouped]
+        
+    def find_cluster(self):
+        while True:
+            distances = np.array([np.linalg.norm(self.X - centroid, axis=1) for centroid in self.centroids]).T
+            closest_centroids = np.argmin(distances, axis=1)
+
+            if np.array_equal(closest_centroids,self.assignments):
+                break
+            else:
+                self.update_centroids(closest_centroids)
+                self.assignments = closest_centroids
+
+        return self.assignments
+```
+
+# Practical Example
+Before we begin, we will start by loading in the necessary libraries. 
+
+```{python}
+import sklearn as sk
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt 
+import seaborn as sns
+
+from sklearn.cluster import KMeans
+```
+
+## Dataset Description:
+We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`. 
+
+We will start by creating the response variable `color` for each dataset and then merging the two datasets into one.
+
+```{python}
+red = pd.read_csv('data/winequality-red.csv', sep=';', header=0)  
+white = pd.read_csv('data/winequality-white.csv', sep=';', header=0) 
+
+red['color'] = 'red'
+white['color'] = 'white'
+
+wine_data = pd.concat([red, white], axis=0)
+print(len(wine_data))
+print(pd.value_counts(wine_data['color']))
+```
+
+ We now have one dataset `wine_data` that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced, so when we create our training dataset, we will have to stratify our sampling to ensure an even proportion of red and white wine. 
+ ## FIX ME is this fine? shoudl we drop some of the white wine samples?
+
+## Exploratory Data Analysis
+Prior to applying the algorithm to our data, we should first explore the dataset to get an idea of the structure of this dataset. 
+
+First, let us take a look at the correlations between features.
+```{python}
+correlation_matrix = wine_data.drop(columns=['color']).corr()
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', cbar=True)
+plt.title('Correlation Matrix of Wine Quality Dataset')
+plt.show()
+```
+
+There are a few relationships to note. The highest correlated variables are `total sulfur dioxide` and `free sulfur dioxide`, which exhibit a positive correlation. This makes sense as total sulfur dioxide is usually calculated the sum of free sulfur dioxide and bound sulfure dioxide. This could support an argument for dropping one of these predictors from our analysis, but we do not have any measure for bound sulfur dioxide and do not have additional information about the calculation of these varaibles readily avaible, so it could be beneficial to keep both predictors. ## FIX ME decide if we want to drop or not. Another relationship of note is the negatie correlation between `density` and `alcohol`. This is another expected relation as higher ABV liquids are generally less dense. ## FIX ME add more here?
+
+## MORE EDA HERE 
+
+# References
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.
