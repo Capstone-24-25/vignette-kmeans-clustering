@@ -1,21 +1,30 @@
 # K-Means Clustering: Conceptual Overview
+K-means clustering is a form of unsupervised learning that divides data into ***k*** groups, called clusters. The split of data into groups is unknown, and the data points fall into a certain cluster based on the mathematical distance measurement from the center of the cluster. In most instances, the mathematical distance measurement is Eucledian, with the mean or median of the cluster being the determining factor of whether or not a data point belongs. An apt division minimizes the variation within each cluster with maximized variation between each cluster. This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters, so that clusters formed by k-means clustering are "compact and isolated".
 
+# K-means algorithm
+The process for K-means clustering is as follows:
+1. initialize K: set k equal to the number of clusters desired
+2. Assign centroids:
 
+- Expectation step: assign data points to closest centroid based on predetermined measurement of distance
+- Maximization step: reassigns center of cluster based on mean of data points in cluster
 
-this is code for a manually implemented k-means algorthm. do not have to use if do not want to, but could be useful for explaining the algorithm? not sure tbh j wanted to give the option
+Expectation and maximization steps repeat until we reach convergence.
+
+Here, we have code for the manual implementation of k-means clustering, showing each step of the k-means clustering algorithm in Python.
 ```{python}
 class kMeans():
-    def __init__(self, K, X):
+    def __init__(self, K, X): # Initialize k
         self.K = K
         self.centroids = X[np.random.choice(X.shape[0], size=K, replace=False)]
         self.assignments = np.zeros(X.shape[0], dtype=int)
         self.X = X
 
-    def update_centroids(self, closest_centroids):
+    def update_centroids(self, closest_centroids): # Assign centroids
         X_grouped = [self.X[closest_centroids == idx] for idx in range(len(self.centroids))]
         self.centroids = [X.mean(axis=0) for X in X_grouped]
         
-    def find_cluster(self):
+    def find_cluster(self): # Convergence
         while True:
             distances = np.array([np.linalg.norm(self.X - centroid, axis=1) for centroid in self.centroids]).T
             closest_centroids = np.argmin(distances, axis=1)
@@ -31,7 +40,6 @@ class kMeans():
 
 # Practical Example
 Before we begin, we will start by loading in the necessary libraries. 
-
 ```{python}
 import sklearn as sk
 import pandas as pd
@@ -65,7 +73,7 @@ print(len(wine_data))
 print(pd.value_counts(wine_data['color']))
 ```
 
- We now have one dataset `wine_data` that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced, so when we create our training dataset, we will have to stratify our sampling to ensure an even proportion of red and white wine. 
+We now have one dataset `wine_data` that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced, so when we create our training dataset, we will have to stratify our sampling to ensure an even proportion of red and white wine. 
  ## FIX ME is this fine? shoudl we drop some of the white wine samples?
 
 
@@ -98,3 +106,4 @@ For each numerical variable, we generated histograms to visualize the distributi
 
 # References
 Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.
+IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering
