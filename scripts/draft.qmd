@@ -73,11 +73,11 @@ Drawbacks: sensitive to outliers, dependence on input parameters, difficulty wor
 
 ## Outline of Code Implementation
 
-Potential dataset:
+Potential dataset: wine_data
 
-Process:
+Process: First, we concatentated the white wine and red wine datasets. We will then do data preprocessing such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We will then normalize and standardize the variables with strongly skewed distributions using log transformation and other methods, before applying the k-means clustering algorithm. 
 
-Goal:
+Goal: To predict the color of wine based on a variety of factors. 
 
 Outcome:
 
