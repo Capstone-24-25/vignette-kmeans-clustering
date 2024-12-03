@@ -2,8 +2,8 @@
 K-means clustering is a form of unsupervised learning that divides data into ***k*** groups, called clusters. The split of data into groups is unknown, and the data points fall into a certain cluster based on the mathematical distance measurement from the center of the cluster. In most instances, the mathematical distance measurement is Eucledian, with the mean or median of the cluster being the determining factor of whether or not a data point belongs. An apt division minimizes the variation within each cluster with maximized variation between each cluster. This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters, so that clusters formed by k-means clustering are "compact and isolated".
 
 # K-means algorithm
-The process for K-means clustering is as follows:
-1. initialize K: set k equal to the number of clusters desired
+The process for K-means clustering is as follows:\
+1. initialize K: set k equal to the number of clusters desired\
 2. Assign centroids:
 
 - Expectation step: assign data points to closest centroid based on predetermined measurement of distance
