@@ -51,9 +51,9 @@ from sklearn.cluster import KMeans
 ```
 
 ## Code Implementation
-Process: First, we concatentated the white wine and red wine datasets. We will then do data preprocessing such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We will then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
+**Process:** First, we concatentate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
 
-Goal: To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.
+**Goal:** To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.
 
 
 ## Dataset Description:
@@ -105,5 +105,5 @@ For each numerical variable, we generated histograms to visualize the distributi
 ## Potentially switch order of feature histograms and correlation matrix
 
 # References
-Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
 IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering
