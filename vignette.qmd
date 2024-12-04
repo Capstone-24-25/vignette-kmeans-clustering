@@ -1,5 +1,11 @@
 # K-Means Clustering: Conceptual Overview
-K-means clustering is a form of unsupervised learning that divides data into ***k*** groups, called clusters. The split of data into groups is unknown, and the data points fall into a certain cluster based on the mathematical distance measurement from the center of the cluster. In most instances, the mathematical distance measurement is Eucledian, with the mean or median of the cluster being the determining factor of whether or not a data point belongs. An apt division minimizes the variation within each cluster with maximized variation between each cluster. This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters, so that clusters formed by k-means clustering are "compact and isolated".
+K-means clustering is a form of unsupervised learning that divides ***n*** observations into ***k*** groups, called clusters. 
+
+The split of data into groups is unknown, and the data points fall into a certain cluster based on the mathematical distance measurement from the center of the cluster. In most instances, the mathematical distance measurement is Euclidean, with the mean or median of the cluster being the determining factor of whether or not a data point belongs.
+
+Clusters are then randomly assigned a centroid, or center, in the space. Each data point is then assigned to one of the clusters. After assigning each point to one of the clusters, new centroids are assigned. This is repeated until a "good" cluster is found.
+
+An apt division minimizes the variation within each cluster with maximized variation between each cluster. This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters, so that clusters formed by k-means clustering are "compact and isolated".
 
 # K-means algorithm
 The process for K-means clustering is as follows:\
@@ -50,11 +56,6 @@ import seaborn as sns
 from sklearn.cluster import KMeans
 ```
 
-## Code Implementation
-**Process:** First, we concatentate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
-
-**Goal:** To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.
-
 
 ## Dataset Description:
 We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`. 
@@ -76,6 +77,17 @@ print(pd.value_counts(wine_data['color']))
 We now have one dataset `wine_data` that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced, so when we create our training dataset, we will have to stratify our sampling to ensure an even proportion of red and white wine. 
  ## FIX ME is this fine? shoudl we drop some of the white wine samples?
 
+
+## Code Implementation
+**Process:** First, we concatentate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
+
+**Goal:** To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.
+
+**Outcomes:** \
+- Cluster Assignments: Each wine sample will be assigned to a cluster based on its properties \
+- Information from Centroids: The centroids of each cluster may provide information on the differences between red and white wines (i.e. one cluster may have higher density, which is indicative of red wines) \
+
+**Impact of K-means Clustering:** Relationships observed during EDA can be reflected in distinct centroids and important features are highlighted through clustering
 
 ## Exploratory Data Analysis
 Prior to applying the algorithm to our data, we should first explore the dataset to get an idea of the structure of this dataset. 
@@ -107,3 +119,4 @@ For each numerical variable, we generated histograms to visualize the distributi
 # References
 Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
 IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering
+GeeksforGeeks. (2024). K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/
