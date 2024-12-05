@@ -7,7 +7,7 @@ from sklearn.cluster import KMeans
 from scipy.stats import mode
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
-
+from sklearn.utils import resample
 
 ##############################################
 # Manual Implementation of K-means Clustering #
@@ -78,6 +78,17 @@ white['color'] = 'white'                                                # create
 wine_data = pd.concat([red, white], axis=0)                             # combine both datasets into one
 print(len(wine_data))                                                   # calculate the length of the datasets to confirm concatenation
 print(pd.value_counts(wine_data['color']))                              # confirm the value counts of the red and white wine 
+
+desired_white_count = int(len(red) * (60 / 40))            # Adjust white count to achieve 40-60 balance
+white_downsampled = resample(                              # resample the white wine data to drop some observations
+    white, 
+    replace=False, 
+    n_samples=desired_white_count, 
+    random_state=42
+)
+
+wine_data = pd.concat([red, white_downsampled], axis=0)                                 # concatenate the datasets
+wine_data = wine_data.sample(frac=1, random_state=42).reset_index(drop=True)            # shuffle the final dataset
 
 
 correlation_matrix = wine_data.drop(columns=['color']).corr()                           # create correlation matrix of the quantitative data
