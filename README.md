@@ -14,7 +14,7 @@ Conceptual explanation and practical example of the k-means clustering algorithm
 
 ### To Learn More
 
-Chapter 12.4.1 in the textbook [*An Introduction to Statistical Learning*](https://www.statlearning.com/)provides a much more in-depth explanation of the theoretical math foundations of K-means clustering. The textbook is available with examples in both Python and R.
+Chapter 12.4.1 in the textbook [*An Introduction to Statistical Learning*](https://www.statlearning.com/) provides a much more in-depth explanation of the theoretical math foundations of K-means clustering. The textbook is available with examples in both Python and R.
 
 This [handout](https://stanford.edu/~cpiech/cs221/handouts/kmeans.html) from Stanford University expands on the connection between K-means clustering and the Expectation Maximization algorithm that we briefly touch on in our explanation.
 
