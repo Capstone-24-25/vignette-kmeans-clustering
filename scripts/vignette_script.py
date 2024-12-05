@@ -4,6 +4,9 @@ import sklearn as sk
 import matplotlib.pyplot as plt 
 import seaborn as sns
 from sklearn.cluster import KMeans
+from scipy.stats import mode
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
 
 
 ##############################################
@@ -11,7 +14,7 @@ from sklearn.cluster import KMeans
 ##############################################
 
 class kMeans():
-    def __init__(self, K, X): # Initialize k
+    def __init__(self, K, X):
         self.K = K                                                                      # store K value 
         self.centroids = X[np.random.choice(X.shape[0], size=K, replace=False)]         # initialize random centroids 
         self.assignments = np.zeros(X.shape[0], dtype=int)                              # create vector to store assignments
@@ -39,6 +42,29 @@ class kMeans():
         return self.assignments        # return our solution
     
 
+np.random.seed (0)                              # set a seed for reproducibility
+X = np.random.standard_normal ((50 ,2))         # create simulated data
+X[:25 ,0] += 3                                  # shift first dimension of the first 25 observations up by 3
+X[:25 ,1] -= 4                                  # shift second dimension of the first 25 observations down by 4
+
+cluster = kMeans(2, X)                          # instantiate class
+predicted_labels = cluster.find_cluster()       # find the predicted labels 
+
+true_labels = np.array([0] * 25 + [1] * 25)     # create the true labels 
+
+label_mapping = {}                                                                      # instantiate the label mapping 
+for cluster in np.unique(predicted_labels):                                             # iterate through each unique predicted cluster label
+    cluster_indices = np.where(predicted_labels == cluster)[0]                          # get indices of data points in the current cluster
+    most_common_label = mode(true_labels[cluster_indices], keepdims=True).mode[0]       # find the most common true label in the cluster    
+    label_mapping[cluster] = most_common_label                                          # map the predicted cluster label to the most common true label
+
+mapped_labels = np.array([label_mapping[label] for label in predicted_labels])          # map all predicted labels to their corresponding true labels
+
+accuracy = np.sum(mapped_labels == true_labels) / len(true_labels)                      # calculate accuracy as the proportion of correctly classified labels
+
+print(accuracy)       # print the calculated accuracy
+
+
 #####################
 # Practical Example #
 #####################
@@ -58,9 +84,9 @@ correlation_matrix = wine_data.drop(columns=['color']).corr()                   
 plt.figure(figsize=(10, 8))                                                             # set the figure size
 sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', cbar=True)      # create the heatmap to present the matrix 
 plt.title('Correlation Matrix of Wine Quality Dataset')                                 # title the figure
-plt.show()                                                                             # show the figure 
+plt.show()                                                                              # show the figure 
 
-wine_data = wine_data.drop(columns=['free sulfur dioxide']) #drop free sulfur dioxide, as that is directly related
+wine_data = wine_data.drop(columns=['free sulfur dioxide']) #drop free sulfur dioxide, as that is directly related to another predictor
 
 
 wine_data.hist(bins=20, figsize=(15, 10)) #generates histograms for distribution of each variable
