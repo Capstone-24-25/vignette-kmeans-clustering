@@ -7,7 +7,7 @@ Clusters are then randomly assigned a centroid, or center, in the space. Each da
 
 An apt division minimizes the variation within each cluster with maximized variation between each cluster. This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters, so that clusters formed by k-means clustering are "compact and isolated".
 
-# K-means algorithm
+## K-means algorithm
 The process for K-means clustering is as follows:\
 1. initialize K: set k equal to the number of clusters desired\
 2. Assign centroids:
@@ -18,19 +18,24 @@ The process for K-means clustering is as follows:\
 Expectation and maximization steps repeat until we reach convergence.
 
 Here, we have code for the manual implementation of k-means clustering, showing each step of the k-means clustering algorithm in Python.
+
+We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also intialize a vector of assignmnets that is the samelength as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call `find_cluster`, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call `update_centroids`. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.
+
 ```{python}
 class kMeans():
-    def __init__(self, K, X): # Initialize k
+    def __init__(self, K, X):
         self.K = K
         self.centroids = X[np.random.choice(X.shape[0], size=K, replace=False)]
         self.assignments = np.zeros(X.shape[0], dtype=int)
         self.X = X
 
-    def update_centroids(self, closest_centroids): # Assign centroids
+    def update_centroids(self, closest_centroids):
+        '''This method will update the stored centroids according to the new clusters '''
         X_grouped = [self.X[closest_centroids == idx] for idx in range(len(self.centroids))]
         self.centroids = [X.mean(axis=0) for X in X_grouped]
         
-    def find_cluster(self): # Convergence
+    def find_cluster(self):
+        ''' This method will iteratively search for clusters'''
         while True:
             distances = np.array([np.linalg.norm(self.X - centroid, axis=1) for centroid in self.centroids]).T
             closest_centroids = np.argmin(distances, axis=1)
