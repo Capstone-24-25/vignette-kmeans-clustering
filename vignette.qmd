@@ -123,6 +123,9 @@ plt.show()
 
 For each numerical variable, we generated histograms to visualize the distribution and analyze the spread of data. This analysis will help us identify patterns in the data, such as symmetry, skewness, and outliers, which will help us determine what data preprocessing should be done in order to create the best k-means algorithm. For example, the graphs show us that many of the variables, such as `fixed acidity`, `volatile acidity`, `residual sugar`, `chlorides`, and `sulphates`, are heavily right-skewed, indicating that we might need to normalize or scale these features before applying the algorithm, potentially through log-transformation or other methods. Additionally, variables like `residual sugar`, `total sulfur dioxide`, and `alcohol` have long right tails, which indicate the presence of significant outliers. Because of these outliers, we could run into issues with the clustering results if we don't address them. Lastly, `pH`, `quality`, and `density` all have more symmetric, bell-shaped distributions than the other variables, which are indicators that these would be good features to include in k-means clustering. 
 
+## Data Preprocessing
+Now that we have conducted our EDA, we know how to move forward with our data preprocessing. We will first be removing outliers, as the graphs show that there are significant and extreme outliers in the distributions of some of the variables. We will then be log transforming and square root transforming the remaining variables to get rid of any right-skewedness the variables may still have. 
+
 ### Outlier Removal
 Outliers are an issue when it comes to applying a clustering algorithm like k-means. Their presence can distort the centroid of the cluster, pulling them away from most of the datapoints. In order to address this, we should remove the extreme outliers before transformation so we don't accidentally amplify them. 
 
