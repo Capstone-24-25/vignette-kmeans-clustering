@@ -126,6 +126,24 @@ plt.show()
 
 For each numerical variable, we generated histograms to visualize the distribution and analyze the spread of data. This analysis will help us identify patterns in the data, such as symmetry, skewness, and outliers, which will help us determine what data preprocessing should be done in order to create the best k-means algorithm. For example, the graphs show us that many of the variables, such as `fixed acidity`, `volatile acidity`, `residual sugar`, `chlorides`, and `sulphates`, are heavily right-skewed, indicating that we might need to normalize or scale these features before applying the algorithm, potentially through log-transformation or other methods. Additionally, variables like `residual sugar`, `total sulfur dioxide`, and `alcohol` have long right tails, which indicate the presence of significant outliers. Because of these outliers, we could run into issues with the clustering results if we don't address them. Lastly, `pH`, `quality`, and `density` all have more symmetric, bell-shaped distributions than the other variables, which are indicators that these would be good features to include in k-means clustering. 
 
+### Outlier Removal
+Outliers are an issue when it comes to applying a clustering algorithm like k-means. Their presence can distort the centroid of the cluster, pulling them away from most of the datapoints. In order to address this, we should remove the extreme outliers before transformation so we don't accidentally amplify them. 
+
+```{python}
+def remove_extreme_outliers_iqr(data, column, multiplier=3):
+    Q1 = data[column].quantile(0.25)
+    Q3 = data[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - multiplier * IQR
+    upper_bound = Q3 + multiplier * IQR
+    return data[(data[column] >= lower_bound) & (data[column] <= upper_bound)]
+
+# Remove only extreme outliers
+columns_to_clean = ['fixed acidity', 'volatile acidity', 'chlorides', 'sulphates']
+for col in columns_to_clean:
+    wine_data = remove_extreme_outliers_iqr(wine_data, col, multiplier=3)
+```
+
 ### Scaling and Normalizing variables
 We have determined through manual inspection of the graphs that some variables definitely need transformation and normalization. To determine exactly which ones need this, we can run the skew function, which calculates the Fisher-Pearson coefficient of skewness. 
 ```{python}
@@ -133,11 +151,43 @@ numerical_columns = wine_data.select_dtypes(include=['number'])
 
 skewness = numerical_columns.skew()
 
-# Print skewness values
 print(skewness)
 ```
 
-This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `volatile acidity`, `residual sugar`, and `sulphates` are the most heavily skewed. However, most of the variables all have some moderate level of skew, with the exception of `citric acid`, `total sulfur dioxide`, `pH`, and `quality`. This means that all of these variables will have to be transformed in some way to make their distribution more normal. 
+This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `volatile acidity`, `residual sugar`, `sulphates`, and `alcohol` are the most heavily skewed, even after outlier removal. We will be using log transformation on most variables and square root transformation on the other 2. 
+
+We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables. 
+
+```{python}
+original_data = wine_data
+# Log transformation for heavy skew
+log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides']
+for col in log_transform_vars:
+    wine_data[col] = np.log1p(wine_data[col])
+```
+
+We will then be dealing with the moderately skewed variables, using square root transformation. 
+
+```{python}
+# Square root transformation for moderate skew
+sqrt_transform_vars = ['sulphates', 'alcohol']
+for col in sqrt_transform_vars:
+    wine_data[col] = np.sqrt(wine_data[col])
+```
+
+We will be leaving all variables with a skewness less than 0.5 unchanged, as those are close to symmetric distributions. We can recheck the skewness of the variables after the transformation to see if they are more normalized. 
+
+```{python}
+numerical_columns = wine_data.select_dtypes(include=['number'])
+
+skewness = numerical_columns.skew()
+
+# Print skewness values
+print(skewness)
+
+```
+
+We have now run transformation on all of the skewed variables. Though `volatile acidity`, `fixed acidity`, and `chlorides` are still moderately to heavily skewed, they have improved from previously, and it is important to not over-transform the variables because we can then lose valuable information about the variables and distort the data. We are now ready to apply the k-means algorithm. 
 
 # References
 Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
