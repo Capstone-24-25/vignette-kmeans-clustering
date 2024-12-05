@@ -115,9 +115,6 @@ wine_data = wine_data.drop(columns=['free sulfur dioxide'])
  Another relationship of note is the negative correlation between `density` and `alcohol`. This is another expected relation as higher ABV liquids are generally less dense. ## FIX ME add more here?
 
 ### HISTOGRAMS
-```{python}
-print(wine_data.head())
-```
 
 ```{python}
 wine_data.hist(bins=20, figsize=(15, 10))
@@ -159,7 +156,6 @@ This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `v
 We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables. 
 
 ```{python}
-original_data = wine_data
 # Log transformation for heavy skew
 log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides']
 for col in log_transform_vars:
@@ -178,13 +174,10 @@ for col in sqrt_transform_vars:
 We will be leaving all variables with a skewness less than 0.5 unchanged, as those are close to symmetric distributions. We can recheck the skewness of the variables after the transformation to see if they are more normalized. 
 
 ```{python}
-numerical_columns = wine_data.select_dtypes(include=['number'])
-
 skewness = numerical_columns.skew()
 
 # Print skewness values
 print(skewness)
-
 ```
 
 We have now run transformation on all of the skewed variables. Though `volatile acidity`, `fixed acidity`, and `chlorides` are still moderately to heavily skewed, they have improved from previously, and it is important to not over-transform the variables because we can then lose valuable information about the variables and distort the data. We are now ready to apply the k-means algorithm. 

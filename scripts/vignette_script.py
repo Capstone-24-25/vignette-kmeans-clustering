@@ -58,4 +58,42 @@ correlation_matrix = wine_data.drop(columns=['color']).corr()                   
 plt.figure(figsize=(10, 8))                                                             # set the figure size
 sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', cbar=True)      # create the heatmap to present the matrix 
 plt.title('Correlation Matrix of Wine Quality Dataset')                                 # title the figure
-plt.show()                                                                              # show the figure 
+plt.show()                                                                             # show the figure 
+
+wine_data = wine_data.drop(columns=['free sulfur dioxide']) #drop free sulfur dioxide, as that is directly related
+
+
+wine_data.hist(bins=20, figsize=(15, 10)) #generates histograms for distribution of each variable
+plt.show() #shows graph
+
+
+def remove_extreme_outliers_iqr(data, column, multiplier=3): #function that removes only extreme outliers 
+    Q1 = data[column].quantile(0.25)
+    Q3 = data[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - multiplier * IQR
+    upper_bound = Q3 + multiplier * IQR
+    return data[(data[column] >= lower_bound) & (data[column] <= upper_bound)]
+
+columns_to_clean = ['fixed acidity', 'volatile acidity', 'chlorides', 'sulphates'] #cleans columns that still had large amounts of skewness even after transformation
+for col in columns_to_clean:
+    wine_data = remove_extreme_outliers_iqr(wine_data, col, multiplier=3)
+
+
+numerical_columns = wine_data.select_dtypes(include=['number']) #finds all numerical columns in dataset
+skewness = numerical_columns.skew() #calculates skewness of all numerical columns using Fisher-Pearson coefficient
+print(skewness) #prints out skewness
+
+# Log transformation for heavy skew
+log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides'] #identifies which columns are heavily skewed and should be log transformed
+for col in log_transform_vars:
+    wine_data[col] = np.log1p(wine_data[col]) #loops through the columns and log transforms them
+
+# Square root transformation for moderate skew
+sqrt_transform_vars = ['sulphates', 'alcohol'] #identifies which columns are moderately skewed and should be square root transformed
+for col in sqrt_transform_vars:
+    wine_data[col] = np.sqrt(wine_data[col]) #loops through the columns and square root transforms them
+
+skewness = numerical_columns.skew() #recalculates skewness 
+# Print skewness values
+print(skewness) #prints out new skewness values after transformation
