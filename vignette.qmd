@@ -208,7 +208,7 @@ This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `v
 We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables. 
 
 ```{python}
-# Log transformation for heavy skew
+"# Log transformation for heavy skew
 log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides']
 for col in log_transform_vars:
     wine_data[col] = np.log1p(wine_data[col])
@@ -248,7 +248,7 @@ wine_scaled = scaler.fit_transform(features)
 ```{python}
 #initializes k-means model
 kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42)
-kmeans.fit(wine_data)
+kmeans.fit(wine_scaled)
 
 # adds k-means cluster labels
 wine_data['cluster'] = kmeans.labels_
