@@ -97,3 +97,26 @@ for col in sqrt_transform_vars:
 skewness = numerical_columns.skew() #recalculates skewness 
 # Print skewness values
 print(skewness) #prints out new skewness values after transformation
+
+
+features = wine_data.drop(columns=['color']) #drop any non numerical columns for k-means application
+scaler = StandardScaler() #standardizes features
+wine_scaled = scaler.fit_transform(features) #applies standardization to wine data
+
+kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42) #initializes k-means model with 2 clusters
+kmeans.fit(wine_scaled) #fits kmeans to wine_scaled data
+
+wine_data['cluster'] = kmeans.labels_ #adds k-means cluster labels
+
+print("Inertia:", kmeans.inertia_) #prints out inertia score of model
+silhouette_avg = silhouette_score(wine_scaled, kmeans.labels_) #calculates average silhouette score
+print("Silhouette Score:", silhouette_avg) #prints out silhouette score
+
+#visualizes clusters
+plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis') #plots data points and colors them based on cluster label
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids') #plots cluster centroids in red 
+plt.xlabel("Feature 1") #labels x axis
+plt.ylabel("Feature 2") #labels y axis
+plt.title("K-means Clustering") #adds title
+plt.legend() #adds legend
+plt.show() #shows plot
