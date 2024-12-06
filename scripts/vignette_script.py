@@ -157,3 +157,12 @@ plt.ylabel("Feature 2") #labels y axis
 plt.title("K-means Clustering") #adds title
 plt.legend() #adds legend
 plt.show() #shows plot
+
+
+pd.crosstab(wine_data['color'], wine_data['cluster']) #compares actual wine colors to predicted k-means labels
+
+#Calculate accuracy of k-means model
+total_wines = wine_data.shape[0]  # Total number of wines
+correctly_classified = 1473 + 2333  # Wines in correct clusters
+accuracy = correctly_classified / total_wines #calculates accuracy by correct/total
+print(f"Clustering accuracy: {accuracy * 100:.2f}%") #converts to a percent
