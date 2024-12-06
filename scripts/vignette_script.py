@@ -157,14 +157,20 @@ plt.title("K-means Clustering")                                                 
 plt.legend()                                                                                                    # adds legend
 plt.show()                                                                                                      # shows plot
 
-# Compare actual wine colors to predicted k-means labels
-pd.crosstab(wine_data['color'], wine_data['cluster'])       # creates a cross-tabulation table showing the relationship between actual wine colors and k-means cluster assignments
 
 #visualizes clusters
-plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis') #plots data points and colors them based on cluster label
-plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids') #plots cluster centroids in red 
-plt.xlabel("Feature 1") #labels x axis
-plt.ylabel("Feature 2") #labels y axis
-plt.title("K-means Clustering") #adds title
-plt.legend() #adds legend
-plt.show() #shows plot
+plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis')                                 # plots data points and colors them based on cluster label
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids')        # plots cluster centroids in red 
+plt.xlabel("Feature 1")                                                                                             # labels x axis
+plt.ylabel("Feature 2")                                                                                             # labels y axis
+plt.title("K-means Clustering")                                                                                     # adds title
+plt.legend()                                                                                                        # adds legend
+plt.show()                                                                                                          # shows plot
+
+pd.crosstab(wine_data['color'], wine_data['cluster'])       # compares actual wine colors to predicted k-means labels using a cross-tabulation table
+
+# Calculate accuracy of k-means model
+total_wines = wine_data.shape[0]                            # total number of wines
+correctly_classified = 1473 + 2333                          # Wines in correct clusters
+accuracy = correctly_classified / total_wines               # calculates accuracy by correct/total
+print(f"Clustering accuracy: {accuracy * 100:.2f}%")        # prints accuracy and converts it to a percent

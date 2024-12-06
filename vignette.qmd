@@ -92,6 +92,7 @@ import sklearn as sk
 import pandas as pd
 import matplotlib.pyplot as plt 
 import seaborn as sns
+import numpy as np
 
 from sklearn.cluster import KMeans
 ```
@@ -208,7 +209,7 @@ This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `v
 We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables. 
 
 ```{python}
-"# Log transformation for heavy skew
+# Log transformation for heavy skew
 log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides']
 for col in log_transform_vars:
     wine_data[col] = np.log1p(wine_data[col])
