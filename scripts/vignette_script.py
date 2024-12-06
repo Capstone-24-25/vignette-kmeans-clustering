@@ -8,6 +8,7 @@ from scipy.stats import mode
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 from sklearn.utils import resample
+from sklearn.decomposition import PCA
 
 ###############################################
 # Manual Implementation of K-means Clustering #
@@ -22,13 +23,11 @@ class kMeans():
 
     def update_centroids(self, closest_centroids):
         """This function will update the stored centroids according to the new clusters"""
-
         X_grouped = [self.X[closest_centroids == idx] for idx in range(len(self.centroids))]        # group the datapoints into clusters by the centroids they are assigned to
         self.centroids = [X.mean(axis=0) for X in X_grouped]                                        # calculate the mean of each group to find the centroids of the centroids clusters
         
     def find_cluster(self): 
         """This method will iteratively search for clusters"""
-
         while True:                                                                                                # begin iteratively searching for clusters
             distances = np.array([np.linalg.norm(self.X - centroid, axis=1) for centroid in self.centroids]).T     # calculate the distance matrix; rows are data points, columns are clusters
             closest_centroids = np.argmin(distances, axis=1)                                                       # calculate the closest centroid to each data point
@@ -135,21 +134,29 @@ skewness = numerical_columns.skew()                    # recalculates skewness
 print(skewness)                                        # prints out new skewness values after transformation
 
 
-features = wine_data.drop(columns=['color'])                       # drop any non numerical columns for k-means application
-scaler = StandardScaler()                                          # standardizes features
-wine_scaled = scaler.fit_transform(features)                       # applies standardization to wine data
+features = wine_data.drop(columns=['color'])                          # drop any non numerical columns for k-means application
+scaler = StandardScaler()                                             # standardizes features
+wine_scaled = scaler.fit_transform(features)                          # applies standardization to wine data
 
-kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42)   # initializes k-means model with 2 clusters
-kmeans.fit(wine_scaled)                                            # fits kmeans to wine_scaled data
+# Apply PCA to reduce dimensions
+pca = PCA(n_components=2)                                             # Reduce to 2 dimensions for clustering and visualization
+wine_pca = pca.fit_transform(wine_scaled)                             # Transform the scaled data using PCA
 
-wine_data['cluster'] = kmeans.labels_                              # adds k-means cluster labels
+explained_variance = pca.explained_variance_ratio_                    # captures the proportion of variance explained by each principal component
 
-print("Inertia:", kmeans.inertia_)                                 # prints out inertia score of model
-silhouette_avg = silhouette_score(wine_scaled, kmeans.labels_)     # calculates average silhouette score
-print("Silhouette Score:", silhouette_avg)                         # prints out silhouette score
+print(f"Explained Variance by each component: {explained_variance}")  # print the explained variance ratio
+
+kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42)      # initializes k-means model with 2 clusters
+kmeans.fit(wine_pca)                                                  # fits kmeans to wine_scaled data
+
+wine_data['cluster'] = kmeans.labels_                                 # adds k-means cluster labels
+
+print("Inertia:", kmeans.inertia_)                                    # prints out inertia score of model
+silhouette_avg = silhouette_score(wine_pca, kmeans.labels_)           # calculates average silhouette score
+print("Silhouette Score:", silhouette_avg)                            # prints out silhouette score
 
 # visualizes clusters
-plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis')                             # plots data points and colors them based on cluster label
+plt.scatter(wine_pca[:, 0], wine_pca[:, 1], c=kmeans.labels_, cmap='viridis')                                   # plots data points and colors them based on cluster label
 plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids')    # plots cluster centroids in red 
 plt.xlabel("Feature 1")                                                                                         # labels x axis
 plt.ylabel("Feature 2")                                                                                         # labels y axis
@@ -157,20 +164,8 @@ plt.title("K-means Clustering")                                                 
 plt.legend()                                                                                                    # adds legend
 plt.show()                                                                                                      # shows plot
 
-
-#visualizes clusters
-plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis')                                 # plots data points and colors them based on cluster label
-plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids')        # plots cluster centroids in red 
-plt.xlabel("Feature 1")                                                                                             # labels x axis
-plt.ylabel("Feature 2")                                                                                             # labels y axis
-plt.title("K-means Clustering")                                                                                     # adds title
-plt.legend()                                                                                                        # adds legend
-plt.show()                                                                                                          # shows plot
-
-pd.crosstab(wine_data['color'], wine_data['cluster'])       # compares actual wine colors to predicted k-means labels using a cross-tabulation table
-
-# Calculate accuracy of k-means model
-total_wines = wine_data.shape[0]                            # total number of wines
-correctly_classified = 1473 + 2333                          # Wines in correct clusters
-accuracy = correctly_classified / total_wines               # calculates accuracy by correct/total
-print(f"Clustering accuracy: {accuracy * 100:.2f}%")        # prints accuracy and converts it to a percent
+# calculate accuracy of k-means model
+total_wines = wine_data.shape[0]                            # gets the total number of wines in the dataset
+correctly_classified = 1469 + 2323                          # sums up the wines correctly classified into clusters
+accuracy = correctly_classified / total_wines               # calculates clustering accuracy as the ratio of correctly classified wines to total wines
+print(f"Clustering accuracy: {accuracy * 100:.2f}%")        # prints clustering accuracy as a percentage with two decimal places

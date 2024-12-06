@@ -1,5 +1,6 @@
 # K-Means Clustering: Conceptual Overview
-K-means clustering is a form of unsupervised learning that divides ***n*** observations into ***k*** groups, called clusters. 
+
+K-means clustering is a form of unsupervised learning that divides ***n*** observations into ***k*** groups, called clusters.
 
 The split of data into groups is unknown, and the data points fall into a certain cluster based on the mathematical distance measurement from the center of the cluster. In most instances, the mathematical distance measurement is Euclidean, with the mean or median of the cluster being the determining factor of whether or not a data point belongs.
 
@@ -8,12 +9,13 @@ Clusters are then randomly assigned a centroid, or center, in the space. Each da
 An apt division minimizes the variation within each cluster with maximized variation between each cluster. This means we want data points within a cluster to be similar to each other, but we also want the data points of each cluster to be distinctly different from other clusters, so that clusters formed by k-means clustering are "compact and isolated".
 
 ## K-means algorithm
+
 The process for K-means clustering is as follows:\
 1. initialize K: set k equal to the number of clusters desired\
 2. Assign centroids:
 
-- Expectation step: assign data points to closest centroid based on predetermined measurement of distance
-- Maximization step: reassigns center of cluster based on mean of data points in cluster
+-   Expectation step: assign data points to closest centroid based on predetermined measurement of distance
+-   Maximization step: reassigns center of cluster based on mean of data points in cluster
 
 Expectation and maximization steps repeat until we reach convergence.
 
@@ -60,7 +62,7 @@ X[:25 ,0] += 3
 X[:25 ,1] -= 4
 ```
 
-Now we apply our algorithm, searching for the two clusters. To check the accuracy of the clustering, we first create our ground truth labels. WE have to remember though, the the asingments of clustering by the alogirhtm will not necessarily match the ground truth labels. To circumvent this problem, we map the predicted cluster labels to the ground truth labels using the mode of the true labels in each predicted cluster. Then we calculate the accuracy. 
+Now we apply our algorithm, searching for the two clusters. To check the accuracy of the clustering, we first create our ground truth labels. WE have to remember though, the the asingments of clustering by the alogirhtm will not necessarily match the ground truth labels. To circumvent this problem, we map the predicted cluster labels to the ground truth labels using the mode of the true labels in each predicted cluster. Then we calculate the accuracy.
 
 ```{python}
 from scipy.stats import mode
@@ -83,10 +85,12 @@ accuracy = np.sum(mapped_labels == true_labels) / len(true_labels)
 print(accuracy)
 ```
 
-Our algorithm was 98% accurate! 
+Our algorithm was 98% accurate!
 
 # Practical Example
-Before we begin, we will start by loading in the necessary libraries. 
+
+Before we begin, we will start by loading in the necessary libraries.
+
 ```{python}
 import sklearn as sk
 import pandas as pd
@@ -97,9 +101,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 ```
 
-As you can see, our alogirthm 
-## Dataset Description:
-We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`. 
+As you can see, our alogirthm \## Dataset Description: We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`.
 
 We will start by creating the response variable `color` for each dataset and then merging the two datasets into one.
 
@@ -115,7 +117,7 @@ print(len(wine_data_concat))
 print(pd.value_counts(wine_data_concat['color']))
 ```
 
-We now have one dataset `wine_data` that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced and can cause lots of problems when we apply our k-means algorithm. For the purposes of this exercise, we will drop some of the white wine samples so that the proportion is 40/60 red to white rather than 23/77. 
+We now have one dataset `wine_data` that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced and can cause lots of problems when we apply our k-means algorithm. For the purposes of this exercise, we will drop some of the white wine samples so that the proportion is 40/60 red to white rather than 23/77.
 
 ```{python}
 from sklearn.utils import resample
@@ -134,20 +136,23 @@ wine_data = wine_data.sample(frac=1, random_state=42).reset_index(drop=True)
 ```
 
 ## Code Implementation
+
 **Process:** First, we concatentate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
 
 **Goal:** To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.
 
-**Outcomes:** \
-- Cluster Assignments: Each wine sample will be assigned to a cluster based on its properties \
-- Information from Centroids: The centroids of each cluster may provide information on the differences between red and white wines (i.e. one cluster may have higher density, which is indicative of red wines) \
+**Outcomes:**\
+- Cluster Assignments: Each wine sample will be assigned to a cluster based on its properties\
+- Information from Centroids: The centroids of each cluster may provide information on the differences between red and white wines (i.e. one cluster may have higher density, which is indicative of red wines)\
 
 **Impact of K-means Clustering:** Relationships observed during EDA can be reflected in distinct centroids and important features are highlighted through clustering
 
 ## Exploratory Data Analysis
-Prior to applying the algorithm to our data, we should first explore the dataset to get an idea of the structure of this dataset. 
+
+Prior to applying the algorithm to our data, we should first explore the dataset to get an idea of the structure of this dataset.
 
 First, let us take a look at the correlations between features.
+
 ```{python}
 correlation_matrix = wine_data.drop(columns=['color']).corr()
 plt.figure(figsize=(10, 8))
@@ -156,13 +161,13 @@ plt.title('Correlation Matrix of Wine Quality Dataset')
 plt.show()
 ```
 
-There are a few relationships to note. The highest correlated variables are `total sulfur dioxide` and `free sulfur dioxide`, which exhibit a positive correlation. This makes sense as total sulfur dioxide is usually calculated the sum of free sulfur dioxide and bound sulfur dioxide. This could support an argument for dropping one of these predictors from our analysis, since they are directly correlated, leaving both of these variables in could lead to multicollinearity and issues when we apply our algorithm. We can therefore drop `free sulfur dioxide`. 
+There are a few relationships to note. The highest correlated variables are `total sulfur dioxide` and `free sulfur dioxide`, which exhibit a positive correlation. This makes sense as total sulfur dioxide is usually calculated the sum of free sulfur dioxide and bound sulfur dioxide. This could support an argument for dropping one of these predictors from our analysis, since they are directly correlated, leaving both of these variables in could lead to multicollinearity and issues when we apply our algorithm. We can therefore drop `free sulfur dioxide`.
 
 ```{python}
 wine_data = wine_data.drop(columns=['free sulfur dioxide'])
 ```
 
- Another relationship of note is the negative correlation between `density` and `alcohol`. This is another expected relation as higher ABV liquids are generally less dense. ## FIX ME add more here?
+Another relationship of note is the negative correlation between `density` and `alcohol`. This is another expected relation as higher ABV liquids are generally less dense. \## FIX ME add more here?
 
 ### HISTOGRAMS
 
@@ -171,13 +176,15 @@ wine_data.hist(bins=20, figsize=(15, 10))
 plt.show()
 ```
 
-For each numerical variable, we generated histograms to visualize the distribution and analyze the spread of data. This analysis will help us identify patterns in the data, such as symmetry, skewness, and outliers, which will help us determine what data preprocessing should be done in order to create the best k-means algorithm. For example, the graphs show us that many of the variables, such as `fixed acidity`, `volatile acidity`, `residual sugar`, `chlorides`, and `sulphates`, are heavily right-skewed, indicating that we might need to normalize or scale these features before applying the algorithm, potentially through log-transformation or other methods. Additionally, variables like `residual sugar`, `total sulfur dioxide`, and `alcohol` have long right tails, which indicate the presence of significant outliers. Because of these outliers, we could run into issues with the clustering results if we don't address them. Lastly, `pH`, `quality`, and `density` all have more symmetric, bell-shaped distributions than the other variables, which are indicators that these would be good features to include in k-means clustering. 
+For each numerical variable, we generated histograms to visualize the distribution and analyze the spread of data. This analysis will help us identify patterns in the data, such as symmetry, skewness, and outliers, which will help us determine what data preprocessing should be done in order to create the best k-means algorithm. For example, the graphs show us that many of the variables, such as `fixed acidity`, `volatile acidity`, `residual sugar`, `chlorides`, and `sulphates`, are heavily right-skewed, indicating that we might need to normalize or scale these features before applying the algorithm, potentially through log-transformation or other methods. Additionally, variables like `residual sugar`, `total sulfur dioxide`, and `alcohol` have long right tails, which indicate the presence of significant outliers. Because of these outliers, we could run into issues with the clustering results if we don't address them. Lastly, `pH`, `quality`, and `density` all have more symmetric, bell-shaped distributions than the other variables, which are indicators that these would be good features to include in k-means clustering.
 
 ## Data Preprocessing
-Now that we have conducted our EDA, we know how to move forward with our data preprocessing. We will first be removing outliers, as the graphs show that there are significant and extreme outliers in the distributions of some of the variables. We will then be log transforming and square root transforming the remaining variables to get rid of any right-skewedness the variables may still have. 
+
+Now that we have conducted our EDA, we know how to move forward with our data preprocessing. We will first be removing outliers, as the graphs show that there are significant and extreme outliers in the distributions of some of the variables. We will then be log transforming and square root transforming the remaining variables to get rid of any right-skewedness the variables may still have.
 
 ### Outlier Removal
-Outliers are an issue when it comes to applying a clustering algorithm like k-means. Their presence can distort the centroid of the cluster, pulling them away from most of the datapoints. In order to address this, we should remove the extreme outliers before transformation so we don't accidentally amplify them. 
+
+Outliers are an issue when it comes to applying a clustering algorithm like k-means. Their presence can distort the centroid of the cluster, pulling them away from most of the datapoints. In order to address this, we should remove the extreme outliers before transformation so we don't accidentally amplify them.
 
 ```{python}
 def remove_extreme_outliers_iqr(data, column, multiplier=3):
@@ -195,7 +202,9 @@ for col in columns_to_clean:
 ```
 
 ### Scaling and Normalizing variables
-We have determined through manual inspection of the graphs that some variables definitely need transformation and normalization. To determine exactly which ones need this, we can run the skew function, which calculates the Fisher-Pearson coefficient of skewness. 
+
+We have determined through manual inspection of the graphs that some variables definitely need transformation and normalization. To determine exactly which ones need this, we can run the skew function, which calculates the Fisher-Pearson coefficient of skewness.
+
 ```{python}
 numerical_columns = wine_data.select_dtypes(include=['number'])
 
@@ -204,9 +213,9 @@ skewness = numerical_columns.skew()
 print(skewness)
 ```
 
-This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `volatile acidity`, `residual sugar`, `sulphates`, and `alcohol` are the most heavily skewed, even after outlier removal. We will be using log transformation on most variables and square root transformation on the other 2. 
+This analysis confirms our initial thought that `chlorides`, `fixed acidity`, `volatile acidity`, `residual sugar`, `sulphates`, and `alcohol` are the most heavily skewed, even after outlier removal. We will be using log transformation on most variables and square root transformation on the other 2.
 
-We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables. 
+We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables.
 
 ```{python}
 # Log transformation for heavy skew
@@ -215,7 +224,7 @@ for col in log_transform_vars:
     wine_data[col] = np.log1p(wine_data[col])
 ```
 
-We will then be dealing with the moderately skewed variables, using square root transformation. 
+We will then be dealing with the moderately skewed variables, using square root transformation.
 
 ```{python}
 # Square root transformation for moderate skew
@@ -224,7 +233,7 @@ for col in sqrt_transform_vars:
     wine_data[col] = np.sqrt(wine_data[col])
 ```
 
-We will be leaving all variables with a skewness less than 0.5 unchanged, as those are close to symmetric distributions. We can recheck the skewness of the variables after the transformation to see if they are more normalized. 
+We will be leaving all variables with a skewness less than 0.5 unchanged, as those are close to symmetric distributions. We can recheck the skewness of the variables after the transformation to see if they are more normalized.
 
 ```{python}
 skewness = numerical_columns.skew()
@@ -233,7 +242,7 @@ skewness = numerical_columns.skew()
 print(skewness)
 ```
 
-We have now run transformation on all of the skewed variables. Though `volatile acidity`, `fixed acidity`, and `chlorides` are still moderately to heavily skewed, they have improved from previously, and it is important to not over-transform the variables because we can then lose valuable information about the variables and distort the data. We are now ready to apply the k-means algorithm. 
+We have now run transformation on all of the skewed variables. Though `volatile acidity`, `fixed acidity`, and `chlorides` are still moderately to heavily skewed, they have improved from previously, and it is important to not over-transform the variables because we can then lose valuable information about the variables and distort the data.
 
 ```{python}
 from sklearn.cluster import KMeans
@@ -246,21 +255,37 @@ scaler = StandardScaler()
 wine_scaled = scaler.fit_transform(features) 
 ```
 
+The next step is to apply PCA reduction to the data. This will reduce the dimensionality of the dataset, making it easier to visualize and analyze. PCA is particularly useful when performing K-means clustering because it removes redundancy and noise by capturing the most important variance in the data with a smaller set of features. Focusing on the principal components can improve the performance of K-means by emphasizing meaningful patterns in the data.
+
+```{python}
+from sklearn.decomposition import PCA
+
+# Apply PCA to reduce dimensions
+pca = PCA(n_components=2)
+wine_pca = pca.fit_transform(wine_scaled)
+```
+
+Now that our data pre-processing is done, we can fit our model. We do this with the sklearn package instead of our manual implementation. This is because, practically, it is much more convenient to use a package that is set up to take in complex datasets like the one we have, rather than manually adjusting the algorithm we wrote to fit to whatever dataset we want to use it on. The manual implementation is useful for understanding how k-means clustering works, but in practice it makes more sense to use a pre-built package.
+
 ```{python}
 #initializes k-means model
 kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42)
-kmeans.fit(wine_scaled)
+kmeans.fit(wine_pca)
 
 # adds k-means cluster labels
 wine_data['cluster'] = kmeans.labels_
+```
 
+Now that we have our clusters, we want to understand a bit more about their structure. We can do this by calculating their inertia and silhouette scores. The inertia score is a measure of how tightly clustered the data points are around their respective centroids in K-means clustering. Lower inertia indicates that the clusters are more compact and well-defined. The silhouette score evaluates the quality of clustering by measuring how similar a data point is to its own cluster compared to other clusters. The score ranges from -1 to 1, where a score closer to 1 represents well defined clusters, a score closer to 0 represents overlapping clusters, and a negative score represents possible misclassification of datapoints to clusters. Finally, we plot our clusters to get a sense for them visually.
+
+```{python}
 # evaluates inertia and silhouette scores of model
 print("Inertia:", kmeans.inertia_)
-silhouette_avg = silhouette_score(wine_scaled, kmeans.labels_)
+silhouette_avg = silhouette_score(wine_pca, kmeans.labels_)
 print("Silhouette Score:", silhouette_avg)
 
 # visualizes clusters
-plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis')
+plt.scatter(wine_pca[:, 0], wine_pca[:, 1], c=kmeans.labels_, cmap='viridis')
 plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids')
 plt.xlabel("Feature 1")
 plt.ylabel("Feature 2")
@@ -268,21 +293,29 @@ plt.title("K-means Clustering")
 plt.legend()
 plt.show()
 ```
+
+We have an inertia score of ~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is \~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but they clusters are quite distinct nonetheless.
+
+Since we have the true class labels, we can calculate how accurate the k-means clustering was in grouping the the red wines and white wines. We create a crosstab which shows the relationship between actual wine colors and k-means cluster assignments. We can see that only 32 red wines were misclassified and 60 white wines were misclassified by the algorithm.
+
 ```{python}
 # Compares actual wine colors to predicted k-means labels
 pd.crosstab(wine_data['color'], wine_data['cluster'])
 ```
 
+Finally, we calcualte the accuracy. 
+
 ```{python}
 # Calculate accuracy of k-means model
 total_wines = wine_data.shape[0]  # Total number of wines
-correctly_classified = 1473 + 2333  # Wines in correct clusters
+correctly_classified = 1469 + 2323  # Wines in correct clusters
 accuracy = correctly_classified / total_wines
 print(f"Clustering accuracy: {accuracy * 100:.2f}%")
 ```
 
+We end with an accuracy of 97.63%, which is exceptionally good! 
 
 # References
-Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
-IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering
-GeeksforGeeks. (2024). K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/
+
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality \[Dataset\]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
+IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering GeeksforGeeks. (2024). K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/
