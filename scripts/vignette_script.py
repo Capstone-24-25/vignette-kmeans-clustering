@@ -9,9 +9,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 from sklearn.utils import resample
 
-##############################################
+###############################################
 # Manual Implementation of K-means Clustering #
-##############################################
+###############################################
 
 class kMeans():
     def __init__(self, K, X):
@@ -97,57 +97,68 @@ sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', cbar=Tru
 plt.title('Correlation Matrix of Wine Quality Dataset')                                 # title the figure
 plt.show()                                                                              # show the figure 
 
-wine_data = wine_data.drop(columns=['free sulfur dioxide']) #drop free sulfur dioxide, as that is directly related to another predictor
+wine_data = wine_data.drop(columns=['free sulfur dioxide'])                             # drop free sulfur dioxide, as that is directly related to another predictor
 
 
-wine_data.hist(bins=20, figsize=(15, 10)) #generates histograms for distribution of each variable
-plt.show() #shows graph
+wine_data.hist(bins=20, figsize=(15, 10))                    # generates histograms for distribution of each variable
+plt.show()                                                   # shows graph
 
 
-def remove_extreme_outliers_iqr(data, column, multiplier=3): #function that removes only extreme outliers 
-    Q1 = data[column].quantile(0.25)
-    Q3 = data[column].quantile(0.75)
-    IQR = Q3 - Q1
-    lower_bound = Q1 - multiplier * IQR
-    upper_bound = Q3 + multiplier * IQR
-    return data[(data[column] >= lower_bound) & (data[column] <= upper_bound)]
+def remove_extreme_outliers_iqr(data, column, multiplier=3):                                # defines a function to remove extreme outliers using the interquartile range (IQR)
+    Q1 = data[column].quantile(0.25)                                                        # calculates the 25th percentile (first quartile) of the specified column
+    Q3 = data[column].quantile(0.75)                                                        # calculates the 75th percentile (third quartile) of the specified column
+    IQR = Q3 - Q1                                                                           # computes the interquartile range (IQR) as the difference between Q3 and Q1
+    lower_bound = Q1 - multiplier * IQR                                                     # determines the lower bound for outliers based on the multiplier and IQR
+    upper_bound = Q3 + multiplier * IQR                                                     # determines the upper bound for outliers based on the multiplier and IQR
+    return data[(data[column] >= lower_bound) & (data[column] <= upper_bound)]              # filters the data to include only values within the calculated bounds
 
-columns_to_clean = ['fixed acidity', 'volatile acidity', 'chlorides', 'sulphates'] #cleans columns that still had large amounts of skewness even after transformation
+columns_to_clean = ['fixed acidity', 'volatile acidity', 'chlorides', 'sulphates']          # cleans columns that still had large amounts of skewness even after transformation
 for col in columns_to_clean:
-    wine_data = remove_extreme_outliers_iqr(wine_data, col, multiplier=3)
+    wine_data = remove_extreme_outliers_iqr(wine_data, col, multiplier=3)                   # remove outliers from all columns
 
 
-numerical_columns = wine_data.select_dtypes(include=['number']) #finds all numerical columns in dataset
-skewness = numerical_columns.skew() #calculates skewness of all numerical columns using Fisher-Pearson coefficient
-print(skewness) #prints out skewness
+numerical_columns = wine_data.select_dtypes(include=['number'])                             # finds all numerical columns in dataset
+skewness = numerical_columns.skew()                                                         # calculates skewness of all numerical columns using Fisher-Pearson coefficient
+print(skewness)                                                                             # prints out skewness
 
 # Log transformation for heavy skew
-log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides'] #identifies which columns are heavily skewed and should be log transformed
+log_transform_vars = ['residual sugar', 'fixed acidity', 'volatile acidity', 'chlorides']   # identifies which columns are heavily skewed and should be log transformed
 for col in log_transform_vars:
-    wine_data[col] = np.log1p(wine_data[col]) #loops through the columns and log transforms them
+    wine_data[col] = np.log1p(wine_data[col])                                               # loops through the columns and log transforms them
 
 # Square root transformation for moderate skew
-sqrt_transform_vars = ['sulphates', 'alcohol'] #identifies which columns are moderately skewed and should be square root transformed
+sqrt_transform_vars = ['sulphates', 'alcohol']         # identifies which columns are moderately skewed and should be square root transformed
 for col in sqrt_transform_vars:
-    wine_data[col] = np.sqrt(wine_data[col]) #loops through the columns and square root transforms them
+    wine_data[col] = np.sqrt(wine_data[col])           # loops through the columns and square root transforms them
 
-skewness = numerical_columns.skew() #recalculates skewness 
-# Print skewness values
-print(skewness) #prints out new skewness values after transformation
+skewness = numerical_columns.skew()                    # recalculates skewness 
+print(skewness)                                        # prints out new skewness values after transformation
 
 
-features = wine_data.drop(columns=['color']) #drop any non numerical columns for k-means application
-scaler = StandardScaler() #standardizes features
-wine_scaled = scaler.fit_transform(features) #applies standardization to wine data
+features = wine_data.drop(columns=['color'])                       # drop any non numerical columns for k-means application
+scaler = StandardScaler()                                          # standardizes features
+wine_scaled = scaler.fit_transform(features)                       # applies standardization to wine data
 
-kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42) #initializes k-means model with 2 clusters
-kmeans.fit(wine_scaled) #fits kmeans to wine_scaled data
+kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42)   # initializes k-means model with 2 clusters
+kmeans.fit(wine_scaled)                                            # fits kmeans to wine_scaled data
 
-wine_data['cluster'] = kmeans.labels_ #adds k-means cluster labels
+wine_data['cluster'] = kmeans.labels_                              # adds k-means cluster labels
 
-print("Inertia:", kmeans.inertia_) #prints out inertia score of model
-silhouette_avg = silhouette_score(wine_scaled, kmeans.labels_) #calculates average silhouette score
-print("Silhouette Score:", silhouette_avg) #prints out silhouette score
+print("Inertia:", kmeans.inertia_)                                 # prints out inertia score of model
+silhouette_avg = silhouette_score(wine_scaled, kmeans.labels_)     # calculates average silhouette score
+print("Silhouette Score:", silhouette_avg)                         # prints out silhouette score
+
+# visualizes clusters
+plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis')                             # plots data points and colors them based on cluster label
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', label='Centroids')    # plots cluster centroids in red 
+plt.xlabel("Feature 1")                                                                                         # labels x axis
+plt.ylabel("Feature 2")                                                                                         # labels y axis
+plt.title("K-means Clustering")                                                                                 # adds title
+plt.legend()                                                                                                    # adds legend
+plt.show()                                                                                                      # shows plot
+
+# Compare actual wine colors to predicted k-means labels
+pd.crosstab(wine_data['color'], wine_data['cluster'])       # creates a cross-tabulation table showing the relationship between actual wine colors and k-means cluster assignments
 
 #visualizes clusters
 plt.scatter(wine_scaled[:, 0], wine_scaled[:, 1], c=kmeans.labels_, cmap='viridis') #plots data points and colors them based on cluster label
@@ -157,12 +168,3 @@ plt.ylabel("Feature 2") #labels y axis
 plt.title("K-means Clustering") #adds title
 plt.legend() #adds legend
 plt.show() #shows plot
-
-
-pd.crosstab(wine_data['color'], wine_data['cluster']) #compares actual wine colors to predicted k-means labels
-
-#Calculate accuracy of k-means model
-total_wines = wine_data.shape[0]  # Total number of wines
-correctly_classified = 1473 + 2333  # Wines in correct clusters
-accuracy = correctly_classified / total_wines #calculates accuracy by correct/total
-print(f"Clustering accuracy: {accuracy * 100:.2f}%") #converts to a percent

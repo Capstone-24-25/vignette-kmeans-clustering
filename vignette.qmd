@@ -268,12 +268,12 @@ plt.legend()
 plt.show()
 ```
 ```{python}
-#Compares actual wine colors to predicted k-means labels
+# Compares actual wine colors to predicted k-means labels
 pd.crosstab(wine_data['color'], wine_data['cluster'])
 ```
 
 ```{python}
-#Calculate accuracy of k-means model
+# Calculate accuracy of k-means model
 total_wines = wine_data.shape[0]  # Total number of wines
 correctly_classified = 1473 + 2333  # Wines in correct clusters
 accuracy = correctly_classified / total_wines
