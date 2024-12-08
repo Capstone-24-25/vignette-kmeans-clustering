@@ -101,7 +101,8 @@ import numpy as np
 from sklearn.cluster import KMeans
 ```
 
-## Dataset Description: We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`.
+## Dataset Description:
+We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`.
 
 We will start by creating the response variable `color` for each dataset and then merging the two datasets into one.
 
