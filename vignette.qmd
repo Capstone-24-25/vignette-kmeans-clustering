@@ -21,7 +21,7 @@ Expectation and maximization steps repeat until we reach convergence.
 
 Here, we have code for the manual implementation of k-means clustering, showing each step of the k-means clustering algorithm in Python.
 
-We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also intialize a vector of assignmnets that is the samelength as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call `find_cluster`, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call `update_centroids`. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.
+We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also intialize a vector of assignmnets that is the same length as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call `find_cluster`, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call `update_centroids`. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.
 
 ```{python}
 import numpy as np
@@ -62,7 +62,7 @@ X[:25 ,0] += 3
 X[:25 ,1] -= 4
 ```
 
-Now we apply our algorithm, searching for the two clusters. To check the accuracy of the clustering, we first create our ground truth labels. WE have to remember though, the the asingments of clustering by the alogirhtm will not necessarily match the ground truth labels. To circumvent this problem, we map the predicted cluster labels to the ground truth labels using the mode of the true labels in each predicted cluster. Then we calculate the accuracy.
+Now we apply our algorithm, searching for the two clusters. To check the accuracy of the clustering, we first create our ground truth labels. We have to remember though, the assignments of clustering by the algorithm will not necessarily match the ground truth labels. To circumvent this problem, we map the predicted cluster labels to the ground truth labels using the mode of the true labels in each predicted cluster. Then we calculate the accuracy.
 
 ```{python}
 from scipy.stats import mode
@@ -137,7 +137,7 @@ wine_data = wine_data.sample(frac=1, random_state=42).reset_index(drop=True)
 
 ## Code Implementation
 
-**Process:** First, we concatentate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
+**Process:** First, we concatenate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.
 
 **Goal:** To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.
 
@@ -167,7 +167,7 @@ There are a few relationships to note. The highest correlated variables are `tot
 wine_data = wine_data.drop(columns=['free sulfur dioxide'])
 ```
 
-Another relationship of note is the negative correlation between `density` and `alcohol`. This is another expected relation as higher ABV liquids are generally less dense. \## FIX ME add more here?
+Another relationship of note is the negative correlation between `density` and `alcohol`. This is another expected relation as higher ABV liquids are generally less dense. However, density could also be impacted by `residual sugar`, `pH`, or `volatile acidity`, which are potential determining factors for the classification of wine color, so `density` might be an important variable to keep.
 
 ### HISTOGRAMS
 
@@ -184,7 +184,7 @@ Now that we have conducted our EDA, we know how to move forward with our data pr
 
 ### Outlier Removal
 
-Outliers are an issue when it comes to applying a clustering algorithm like k-means. Their presence can distort the centroid of the cluster, pulling them away from most of the datapoints. In order to address this, we should remove the extreme outliers before transformation so we don't accidentally amplify them.
+Outliers are an issue when it comes to applying a clustering algorithm like K-means. Their presence can distort the centroid of the cluster, pulling them away from most of the data points. In order to address this, we should remove the extreme outliers before transformation so we don't accidentally amplify them.
 
 ```{python}
 def remove_extreme_outliers_iqr(data, column, multiplier=3):
@@ -265,7 +265,7 @@ pca = PCA(n_components=2)
 wine_pca = pca.fit_transform(wine_scaled)
 ```
 
-Now that our data pre-processing is done, we can fit our model. We do this with the sklearn package instead of our manual implementation. This is because, practically, it is much more convenient to use a package that is set up to take in complex datasets like the one we have, rather than manually adjusting the algorithm we wrote to fit to whatever dataset we want to use it on. The manual implementation is useful for understanding how k-means clustering works, but in practice it makes more sense to use a pre-built package.
+Now that our data pre-processing is done, we can fit our model. We do this with the sklearn package instead of our manual implementation. This is because, practically, it is much more convenient to use a package that is set up to take in complex datasets like the one we have, rather than manually adjusting the algorithm we wrote to fit to whatever dataset we want to use it on. The manual implementation is useful for understanding how K-means clustering works, but in practice it makes more sense to use a pre-built package.
 
 ```{python}
 #initializes k-means model
@@ -276,7 +276,7 @@ kmeans.fit(wine_pca)
 wine_data['cluster'] = kmeans.labels_
 ```
 
-Now that we have our clusters, we want to understand a bit more about their structure. We can do this by calculating their inertia and silhouette scores. The inertia score is a measure of how tightly clustered the data points are around their respective centroids in K-means clustering. Lower inertia indicates that the clusters are more compact and well-defined. The silhouette score evaluates the quality of clustering by measuring how similar a data point is to its own cluster compared to other clusters. The score ranges from -1 to 1, where a score closer to 1 represents well defined clusters, a score closer to 0 represents overlapping clusters, and a negative score represents possible misclassification of datapoints to clusters. Finally, we plot our clusters to get a sense for them visually.
+Now that we have our clusters, we want to understand a bit more about their structure. We can do this by calculating their inertia and silhouette scores. The inertia score is a measure of how tightly clustered the data points are around their respective centroids in K-means clustering. Lower inertia indicates that the clusters are more compact and well-defined. The silhouette score evaluates the quality of clustering by measuring how similar a data point is to its own cluster compared to other clusters. The score ranges from -1 to 1, where a score closer to 1 represents well defined clusters, a score closer to 0 represents overlapping clusters, and a negative score represents possible misclassification of data points to clusters. Finally, we plot our clusters to get a sense for them visually.
 
 ```{python}
 # evaluates inertia and silhouette scores of model
@@ -294,9 +294,9 @@ plt.legend()
 plt.show()
 ```
 
-We have an inertia score of ~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is \~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but they clusters are quite distinct nonetheless.
+We have an inertia score of ~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is \~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but the clusters are quite distinct nonetheless.
 
-Since we have the true class labels, we can calculate how accurate the k-means clustering was in grouping the the red wines and white wines. We create a crosstab which shows the relationship between actual wine colors and k-means cluster assignments. We can see that only 32 red wines were misclassified and 60 white wines were misclassified by the algorithm.
+Since we have the true class labels, we can calculate how accurate the K-means clustering was in grouping the the red wines and white wines. We create a crosstab which shows the relationship between actual wine colors and K-means cluster assignments. We can see that only 32 red wines were misclassified and 60 white wines were misclassified by the algorithm.
 
 ```{python}
 # Compares actual wine colors to predicted k-means labels
@@ -317,5 +317,6 @@ We end with an accuracy of 97.63%, which is exceptionally good!
 
 # References
 
+Coburn, K. (2024). Unsupervised learning: K-means clustering [Lecture]. University of California, Santa Barbara.
 Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality \[Dataset\]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
 IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering GeeksforGeeks. (2024). K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/
