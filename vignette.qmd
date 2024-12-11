@@ -21,7 +21,7 @@ Expectation and maximization steps repeat until we reach convergence.
 
 Here, we have code for the manual implementation of k-means clustering, showing each step of the k-means clustering algorithm in Python.
 
-We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also intialize a vector of assignmnets that is the same length as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call `find_cluster`, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call `update_centroids`. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.
+We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also initialize a vector of assignments that is the same length as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call `find_cluster`, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call `update_centroids`. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.
 
 ```{python}
 import numpy as np
@@ -102,6 +102,7 @@ from sklearn.cluster import KMeans
 ```
 
 ## Dataset Description:
+
 We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as `citric_acid`, `density`, `pH`, and more. The response variable of this dataset is `wine_quality`, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting `wine_quality`.
 
 We will start by creating the response variable `color` for each dataset and then merging the two datasets into one.
@@ -295,7 +296,7 @@ plt.legend()
 plt.show()
 ```
 
-We have an inertia score of ~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is \~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but the clusters are quite distinct nonetheless.
+We have an inertia score of \~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is \~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but the clusters are quite distinct nonetheless.
 
 Since we have the true class labels, we can calculate how accurate the K-means clustering was in grouping the the red wines and white wines. We create a crosstab which shows the relationship between actual wine colors and K-means cluster assignments. We can see that only 32 red wines were misclassified and 60 white wines were misclassified by the algorithm.
 
@@ -304,7 +305,7 @@ Since we have the true class labels, we can calculate how accurate the K-means c
 pd.crosstab(wine_data['color'], wine_data['cluster'])
 ```
 
-Finally, we calcualte the accuracy. 
+Finally, we calcualte the accuracy.
 
 ```{python}
 # Calculate accuracy of k-means model
@@ -314,10 +315,14 @@ accuracy = correctly_classified / total_wines
 print(f"Clustering accuracy: {accuracy * 100:.2f}%")
 ```
 
-We end with an accuracy of 97.63%, which is exceptionally good! 
+We end with an accuracy of 97.63%, which is exceptionally good!
 
 # References
 
-Coburn, K. (2024). Unsupervised learning: K-means clustering [Lecture]. University of California, Santa Barbara.
-Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality \[Dataset\]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.\
-IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering GeeksforGeeks. (2024). K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/
+Coburn, K. (2024). Unsupervised learning: K-means clustering \[Lecture\]. University of California, Santa Barbara.
+
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Wine Quality \[Dataset\]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.
+
+IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering GeeksforGeeks. (2024).
+
+K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/
