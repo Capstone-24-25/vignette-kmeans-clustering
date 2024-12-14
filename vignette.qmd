@@ -1,3 +1,7 @@
+# Vignette Abstract
+
+This project utilizes the UC Irvine Wine Quality dataset to illustrate the impact of k-means clustering, a form of unsupervised learning that groups data points into clusters based on feature similarity and their proximity to the centroid. The dataset contained information about different wines, including their color, pH, residual sugar, density, and more. Using K-means clustering, we were able to predict the color of wine, red or white, based on a variety of factors. Ultimately, our model achieved an accuracy of 0.9763, with only 32 red wins and 60 white wines misclassified out of 6947 total observations. 
+
 # K-Means Clustering: Conceptual Overview
 
 K-means clustering is a form of unsupervised learning that divides ***n*** observations into ***k*** groups, called clusters.
