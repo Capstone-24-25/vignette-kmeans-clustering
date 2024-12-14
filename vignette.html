@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -63,10 +63,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="vignette_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="vignette_files/libs/quarto-html/anchor.min.js"></script>
 <link href="vignette_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="vignette_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="vignette_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="vignette_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="vignette_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="vignette_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="vignette_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">K-Means Clustering: Conceptual Overview</h1>
+<h1 class="title">Vignette Abstract</h1>
 </div>
 
 
@@ -99,6 +99,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>This project utilizes the UC Irvine Wine Quality dataset to illustrate the impact of k-means clustering, a form of unsupervised learning that groups data points into clusters based on feature similarity and their proximity to the centroid. The dataset contained information about different wines, including their color, pH, residual sugar, density, and more. Using K-means clustering, we were able to predict the color of wine, red or white, based on a variety of factors. Ultimately, our model achieved an accuracy of 0.9763, with only 32 red wines and 60 white wines mis-classified out of 6947 total observations.</p>
+<section id="k-means-clustering-conceptual-overview" class="level1">
+<h1>K-Means Clustering: Conceptual Overview</h1>
 <p>K-means clustering is a form of unsupervised learning that divides <strong><em>n</em></strong> observations into <strong><em>k</em></strong> groups, called clusters.</p>
 <p>The split of data into groups is unknown, and the data points fall into a certain cluster based on the mathematical distance measurement from the center of the cluster. In most instances, the mathematical distance measurement is Euclidean, with the mean or median of the cluster being the determining factor of whether or not a data point belongs.</p>
 <p>Clusters are then randomly assigned a centroid, or center, in the space. Each data point is then assigned to one of the clusters. After assigning each point to one of the clusters, new centroids are assigned. This is repeated until a “good” cluster is found.</p>
@@ -114,8 +117,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Expectation and maximization steps repeat until we reach convergence.</p>
 <p>Here, we have code for the manual implementation of k-means clustering, showing each step of the k-means clustering algorithm in Python.</p>
-<p>We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also intialize a vector of assignmnets that is the samelength as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call <code>find_cluster</code>, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call <code>update_centroids</code>. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.</p>
-<div id="dfa07e50" class="cell" data-execution_count="1">
+<p>We start by initializing K, the number of clusters, and selecting K random data points from the dataset as the initial centroids. We also initialize a vector of assignments that is the same length as the dataset to store the cluster assignment for each data point. The dataset itself is stored as X. To find clusters, we call <code>find_cluster</code>, which enters a loop that runs until the algorithm converges. At each iteration, the distances from every data point to each centroid are calculated, resulting in a matrix where rows represent data points and columns represent centroids. Each data point is then assigned to the closest centroid. Convergence is checked by comparing the current assignments with those from the previous iteration—if they are the same, the algorithm stops and returns the cluster assignments. If not, we call <code>update_centroids</code>. In this method, the centroids are updated by grouping data points by their current assignments and recalculating the mean position of each cluster, which becomes the new centroid. This process repeats until the cluster assignments match those of the previous iteration.</p>
+<div id="254fc309" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> kMeans():</span>
@@ -145,14 +148,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.assignments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check that this works on a simple example. We will create some simulated two-feature gaussian data. To create two distinct clusters, we add 3 to the first dimension and subtract 4 from the second dimension of the of 25 observations.</p>
-<div id="4cf7460e" class="cell" data-execution_count="2">
+<div id="5f626b2d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>np.random.seed (<span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.standard_normal ((<span class="dv">50</span> ,<span class="dv">2</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X[:<span class="dv">25</span> ,<span class="dv">0</span>] <span class="op">+=</span> <span class="dv">3</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X[:<span class="dv">25</span> ,<span class="dv">1</span>] <span class="op">-=</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we apply our algorithm, searching for the two clusters. To check the accuracy of the clustering, we first create our ground truth labels. WE have to remember though, the the asingments of clustering by the alogirhtm will not necessarily match the ground truth labels. To circumvent this problem, we map the predicted cluster labels to the ground truth labels using the mode of the true labels in each predicted cluster. Then we calculate the accuracy.</p>
-<div id="611b5a21" class="cell" data-execution_count="3">
+<p>Now we apply our algorithm, searching for the two clusters. To check the accuracy of the clustering, we first create our ground truth labels. We have to remember though, the assignments of clustering by the algorithm will not necessarily match the ground truth labels. To circumvent this problem, we map the predicted cluster labels to the ground truth labels using the mode of the true labels in each predicted cluster. Then we calculate the accuracy.</p>
+<div id="e50122b1" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> mode</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> kMeans(<span class="dv">2</span>, X)</span>
@@ -177,10 +180,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Our algorithm was 98% accurate!</p>
 </section>
+</section>
 <section id="practical-example" class="level1">
 <h1>Practical Example</h1>
 <p>Before we begin, we will start by loading in the necessary libraries.</p>
-<div id="b9a4b381" class="cell" data-execution_count="4">
+<div id="e3e43c78" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn <span class="im">as</span> sk</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span>
@@ -189,10 +193,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="dataset-description-we-will-show-an-example-of-running-the-k-means-clustering-algorithm-on-the-wine-quality-from-uc-irvine.-this-dataset-contains-wine-quality-data-with-features-such-as-citric_acid-density-ph-and-more.-the-response-variable-of-this-dataset-is-wine_quality-which-is-rated-on-a-scale-from-0-10.-this-dataset-is-split-into-2-sub-datasets-one-regarding-red-wine-and-one-regarding-white-wine.-since-k-means-clustering-is-best-suited-to-classification-tasks-we-will-attempt-to-group-the-data-into-red-wine-and-white-wine-rather-than-predicting-wine_quality." class="level2">
-<h2 class="anchored" data-anchor-id="dataset-description-we-will-show-an-example-of-running-the-k-means-clustering-algorithm-on-the-wine-quality-from-uc-irvine.-this-dataset-contains-wine-quality-data-with-features-such-as-citric_acid-density-ph-and-more.-the-response-variable-of-this-dataset-is-wine_quality-which-is-rated-on-a-scale-from-0-10.-this-dataset-is-split-into-2-sub-datasets-one-regarding-red-wine-and-one-regarding-white-wine.-since-k-means-clustering-is-best-suited-to-classification-tasks-we-will-attempt-to-group-the-data-into-red-wine-and-white-wine-rather-than-predicting-wine_quality.">Dataset Description: We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as <code>citric_acid</code>, <code>density</code>, <code>pH</code>, and more. The response variable of this dataset is <code>wine_quality</code>, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting <code>wine_quality</code>.</h2>
+<section id="dataset-description" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-description">Dataset Description:</h2>
+<p>We will show an example of running the k-means clustering algorithm on the Wine Quality from UC Irvine. This dataset contains wine quality data, with features such as <code>citric_acid</code>, <code>density</code>, <code>pH</code>, and more. The response variable of this dataset is <code>wine_quality</code>, which is rated on a scale from 0-10. This dataset is split into 2 sub-datasets, one regarding red wine and one regarding white wine. Since k-means clustering is best suited to classification tasks, we will attempt to group the data into red wine and white wine rather than predicting <code>wine_quality</code>.</p>
 <p>We will start by creating the response variable <code>color</code> for each dataset and then merging the two datasets into one.</p>
-<div id="436f884f" class="cell" data-execution_count="5">
+<div id="f15c612c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> pd.read_csv(<span class="st">'data/winequality-red.csv'</span>, sep<span class="op">=</span><span class="st">';'</span>, header<span class="op">=</span><span class="dv">0</span>)  </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>white <span class="op">=</span> pd.read_csv(<span class="st">'data/winequality-white.csv'</span>, sep<span class="op">=</span><span class="st">';'</span>, header<span class="op">=</span><span class="dv">0</span>) </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -210,14 +215,12 @@ red      1599
 Name: count, dtype: int64</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/8r/3w221g_s4hjdwzhnl8h_9y600000gs/T/ipykernel_6119/4123264359.py:9: FutureWarning:
-
-pandas.value_counts is deprecated and will be removed in a future version. Use pd.Series(obj).value_counts() instead.
-</code></pre>
+<pre><code>C:\Users\hanna\AppData\Local\Temp\ipykernel_2760\4123264359.py:9: FutureWarning: pandas.value_counts is deprecated and will be removed in a future version. Use pd.Series(obj).value_counts() instead.
+  print(pd.value_counts(wine_data_concat['color']))</code></pre>
 </div>
 </div>
 <p>We now have one dataset <code>wine_data</code> that has 6947 observations total, with 4898 white wine observations and 1599 red wine observations. This is quite unbalanced and can cause lots of problems when we apply our k-means algorithm. For the purposes of this exercise, we will drop some of the white wine samples so that the proportion is 40/60 red to white rather than 23/77.</p>
-<div id="5c351b26" class="cell" data-execution_count="6">
+<div id="0622fbad" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> resample</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>desired_white_count <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(red) <span class="op">*</span> (<span class="dv">60</span> <span class="op">/</span> <span class="dv">40</span>))  <span class="co"># Adjust white count to achieve 40-60 balance</span></span>
@@ -235,7 +238,7 @@ pandas.value_counts is deprecated and will be removed in a future version. Use p
 </section>
 <section id="code-implementation" class="level2">
 <h2 class="anchored" data-anchor-id="code-implementation">Code Implementation</h2>
-<p><strong>Process:</strong> First, we concatentate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.</p>
+<p><strong>Process:</strong> First, we concatenate the white wine and red wine datasets. Then, we embark on data preprocessing, such as potentially dropping some of the white wine samples so that the data is more balanced. This is followed by Exploratory Data Analysis to understand the variables using histograms of variable distribution and heatmaps to understand variable correlation. We then normalize and standardize the variables with strongly skewed distributions and outliers using log transformation and other methods, before applying the k-means clustering algorithm.</p>
 <p><strong>Goal:</strong> To predict the color of wine based on a variety of factors, such as pH, alcohol level, and more.</p>
 <p><strong>Outcomes:</strong><br>
 - Cluster Assignments: Each wine sample will be assigned to a cluster based on its properties<br>
@@ -247,7 +250,7 @@ pandas.value_counts is deprecated and will be removed in a future version. Use p
 <h2 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h2>
 <p>Prior to applying the algorithm to our data, we should first explore the dataset to get an idea of the structure of this dataset.</p>
 <p>First, let us take a look at the correlations between features.</p>
-<div id="1aea1857" class="cell" data-execution_count="7">
+<div id="f4259867" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="op">=</span> wine_data.drop(columns<span class="op">=</span>[<span class="st">'color'</span>]).corr()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">".2f"</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, cbar<span class="op">=</span><span class="va">True</span>)</span>
@@ -262,13 +265,13 @@ pandas.value_counts is deprecated and will be removed in a future version. Use p
 </div>
 </div>
 <p>There are a few relationships to note. The highest correlated variables are <code>total sulfur dioxide</code> and <code>free sulfur dioxide</code>, which exhibit a positive correlation. This makes sense as total sulfur dioxide is usually calculated the sum of free sulfur dioxide and bound sulfur dioxide. This could support an argument for dropping one of these predictors from our analysis, since they are directly correlated, leaving both of these variables in could lead to multicollinearity and issues when we apply our algorithm. We can therefore drop <code>free sulfur dioxide</code>.</p>
-<div id="68149d99" class="cell" data-execution_count="8">
+<div id="429a7dab" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wine_data <span class="op">=</span> wine_data.drop(columns<span class="op">=</span>[<span class="st">'free sulfur dioxide'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Another relationship of note is the negative correlation between <code>density</code> and <code>alcohol</code>. This is another expected relation as higher ABV liquids are generally less dense. ## FIX ME add more here?</p>
+<p>Another relationship of note is the negative correlation between <code>density</code> and <code>alcohol</code>. This is another expected relation as higher ABV liquids are generally less dense. However, density could also be impacted by <code>residual sugar</code>, <code>pH</code>, or <code>volatile acidity</code>, which are potential determining factors for the classification of wine color, so <code>density</code> might be an important variable to keep.</p>
 <section id="histograms" class="level3">
 <h3 class="anchored" data-anchor-id="histograms">HISTOGRAMS</h3>
-<div id="18c9830b" class="cell" data-execution_count="9">
+<div id="5e5e03be" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>wine_data.hist(bins<span class="op">=</span><span class="dv">20</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -287,8 +290,8 @@ pandas.value_counts is deprecated and will be removed in a future version. Use p
 <p>Now that we have conducted our EDA, we know how to move forward with our data preprocessing. We will first be removing outliers, as the graphs show that there are significant and extreme outliers in the distributions of some of the variables. We will then be log transforming and square root transforming the remaining variables to get rid of any right-skewedness the variables may still have.</p>
 <section id="outlier-removal" class="level3">
 <h3 class="anchored" data-anchor-id="outlier-removal">Outlier Removal</h3>
-<p>Outliers are an issue when it comes to applying a clustering algorithm like k-means. Their presence can distort the centroid of the cluster, pulling them away from most of the datapoints. In order to address this, we should remove the extreme outliers before transformation so we don’t accidentally amplify them.</p>
-<div id="38cee343" class="cell" data-execution_count="10">
+<p>Outliers are an issue when it comes to applying a clustering algorithm like K-means. Their presence can distort the centroid of the cluster, pulling them away from most of the data points. In order to address this, we should remove the extreme outliers before transformation so we don’t accidentally amplify them.</p>
+<div id="cebebba0" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_extreme_outliers_iqr(data, column, multiplier<span class="op">=</span><span class="dv">3</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    Q1 <span class="op">=</span> data[column].quantile(<span class="fl">0.25</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    Q3 <span class="op">=</span> data[column].quantile(<span class="fl">0.75</span>)</span>
@@ -306,7 +309,7 @@ pandas.value_counts is deprecated and will be removed in a future version. Use p
 <section id="scaling-and-normalizing-variables" class="level3">
 <h3 class="anchored" data-anchor-id="scaling-and-normalizing-variables">Scaling and Normalizing variables</h3>
 <p>We have determined through manual inspection of the graphs that some variables definitely need transformation and normalization. To determine exactly which ones need this, we can run the skew function, which calculates the Fisher-Pearson coefficient of skewness.</p>
-<div id="8a9713c9" class="cell" data-execution_count="11">
+<div id="f6ca11e6" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>numerical_columns <span class="op">=</span> wine_data.select_dtypes(include<span class="op">=</span>[<span class="st">'number'</span>])</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>skewness <span class="op">=</span> numerical_columns.skew()</span>
@@ -329,21 +332,21 @@ dtype: float64</code></pre>
 </div>
 <p>This analysis confirms our initial thought that <code>chlorides</code>, <code>fixed acidity</code>, <code>volatile acidity</code>, <code>residual sugar</code>, <code>sulphates</code>, and <code>alcohol</code> are the most heavily skewed, even after outlier removal. We will be using log transformation on most variables and square root transformation on the other 2.</p>
 <p>We will first be dealing with the most heavily skewed variables. We will be using log transformation to normalize these variables.</p>
-<div id="8e88a743" class="cell" data-execution_count="12">
+<div id="1570834e" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log transformation for heavy skew</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>log_transform_vars <span class="op">=</span> [<span class="st">'residual sugar'</span>, <span class="st">'fixed acidity'</span>, <span class="st">'volatile acidity'</span>, <span class="st">'chlorides'</span>]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> log_transform_vars:</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    wine_data[col] <span class="op">=</span> np.log1p(wine_data[col])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will then be dealing with the moderately skewed variables, using square root transformation.</p>
-<div id="1735dc7f" class="cell" data-execution_count="13">
+<div id="16dd335b" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Square root transformation for moderate skew</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sqrt_transform_vars <span class="op">=</span> [<span class="st">'sulphates'</span>, <span class="st">'alcohol'</span>]</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> sqrt_transform_vars:</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    wine_data[col] <span class="op">=</span> np.sqrt(wine_data[col])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will be leaving all variables with a skewness less than 0.5 unchanged, as those are close to symmetric distributions. We can recheck the skewness of the variables after the transformation to see if they are more normalized.</p>
-<div id="99181cec" class="cell" data-execution_count="14">
+<div id="a3ebe647" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>skewness <span class="op">=</span> numerical_columns.skew()</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print skewness values</span></span>
@@ -364,7 +367,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>We have now run transformation on all of the skewed variables. Though <code>volatile acidity</code>, <code>fixed acidity</code>, and <code>chlorides</code> are still moderately to heavily skewed, they have improved from previously, and it is important to not over-transform the variables because we can then lose valuable information about the variables and distort the data.</p>
-<div id="bd6ebac7" class="cell" data-execution_count="15">
+<div id="f2262f80" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
@@ -375,15 +378,15 @@ dtype: float64</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>wine_scaled <span class="op">=</span> scaler.fit_transform(features) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next step is to apply PCA reduction to the data. This will reduce the dimensionality of the dataset, making it easier to visualize and analyze. PCA is particularly useful when performing K-means clustering because it removes redundancy and noise by capturing the most important variance in the data with a smaller set of features. Focusing on the principal components can improve the performance of K-means by emphasizing meaningful patterns in the data.</p>
-<div id="e4b78719" class="cell" data-execution_count="16">
+<div id="aed956a8" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA to reduce dimensions</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>wine_pca <span class="op">=</span> pca.fit_transform(wine_scaled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now that our data pre-processing is done, we can fit our model. We do this with the sklearn package instead of our manual implementation. This is because, practically, it is much more convenient to use a package that is set up to take in complex datasets like the one we have, rather than manually adjusting the algorithm we wrote to fit to whatever dataset we want to use it on. The manual implementation is useful for understanding how k-means clustering works, but in practice it makes more sense to use a pre-built package.</p>
-<div id="03aa3758" class="cell" data-execution_count="17">
+<p>Now that our data pre-processing is done, we can fit our model. We do this with the sklearn package instead of our manual implementation. This is because, practically, it is much more convenient to use a package that is set up to take in complex datasets like the one we have, rather than manually adjusting the algorithm we wrote to fit to whatever dataset we want to use it on. The manual implementation is useful for understanding how K-means clustering works, but in practice it makes more sense to use a pre-built package.</p>
+<div id="feb200f3" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#initializes k-means model</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">2</span>, init<span class="op">=</span><span class="st">'k-means++'</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>kmeans.fit(wine_pca)</span>
@@ -391,8 +394,8 @@ dtype: float64</code></pre>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># adds k-means cluster labels</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>wine_data[<span class="st">'cluster'</span>] <span class="op">=</span> kmeans.labels_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now that we have our clusters, we want to understand a bit more about their structure. We can do this by calculating their inertia and silhouette scores. The inertia score is a measure of how tightly clustered the data points are around their respective centroids in K-means clustering. Lower inertia indicates that the clusters are more compact and well-defined. The silhouette score evaluates the quality of clustering by measuring how similar a data point is to its own cluster compared to other clusters. The score ranges from -1 to 1, where a score closer to 1 represents well defined clusters, a score closer to 0 represents overlapping clusters, and a negative score represents possible misclassification of datapoints to clusters. Finally, we plot our clusters to get a sense for them visually.</p>
-<div id="1392c4ef" class="cell" data-execution_count="18">
+<p>Now that we have our clusters, we want to understand a bit more about their structure. We can do this by calculating their inertia and silhouette scores. The inertia score is a measure of how tightly clustered the data points are around their respective centroids in K-means clustering. Lower inertia indicates that the clusters are more compact and well-defined. The silhouette score evaluates the quality of clustering by measuring how similar a data point is to its own cluster compared to other clusters. The score ranges from -1 to 1, where a score closer to 1 represents well defined clusters, a score closer to 0 represents overlapping clusters, and a negative score represents possible misclassification of data points to clusters. Finally, we plot our clusters to get a sense for them visually.</p>
+<div id="3c48caa3" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># evaluates inertia and silhouette scores of model</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Inertia:"</span>, kmeans.inertia_)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>silhouette_avg <span class="op">=</span> silhouette_score(wine_pca, kmeans.labels_)</span>
@@ -407,8 +410,8 @@ dtype: float64</code></pre>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Inertia: 11332.24332371009
-Silhouette Score: 0.4661285683358558</code></pre>
+<pre><code>Inertia: 11332.243323710076
+Silhouette Score: 0.46612856833586713</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -418,12 +421,12 @@ Silhouette Score: 0.4661285683358558</code></pre>
 </div>
 </div>
 </div>
-<p>We have an inertia score of ~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is ~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but they clusters are quite distinct nonetheless.</p>
-<p>Since we have the true class labels, we can calculate how accurate the k-means clustering was in grouping the the red wines and white wines. We create a crosstab which shows the relationship between actual wine colors and k-means cluster assignments. We can see that only 32 red wines were misclassified and 60 white wines were misclassified by the algorithm.</p>
-<div id="c19dc8fa" class="cell" data-execution_count="19">
+<p>We have an inertia score of ~11332. Inertia can range from 0 to infinity and is not normalized. This can make it a bit hard to interpret, as the value depends greatly on the given dataset. When we look at our diagram, we can see that our centroids are fairly well defined and compact. We would argue that based on this dataset, we can accept this inertia score to be sufficiently low. Our silhouette score is ~0.46, which is pretty good. We can see some overlap of our clusters in our plot, but the clusters are quite distinct nonetheless.</p>
+<p>Since we have the true class labels, we can calculate how accurate the K-means clustering was in grouping the the red wines and white wines. We create a crosstab which shows the relationship between actual wine colors and K-means cluster assignments. We can see that only 32 red wines were misclassified and 60 white wines were misclassified by the algorithm.</p>
+<div id="2d3a256a" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compares actual wine colors to predicted k-means labels</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pd.crosstab(wine_data[<span class="st">'color'</span>], wine_data[<span class="st">'cluster'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
 
@@ -434,7 +437,7 @@ Silhouette Score: 0.4661285683358558</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <th data-quarto-table-cell-role="th">1</th>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">color</th>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th"></th>
@@ -458,7 +461,7 @@ Silhouette Score: 0.4661285683358558</code></pre>
 </div>
 </div>
 <p>Finally, we calcualte the accuracy.</p>
-<div id="e2d6d612" class="cell" data-execution_count="20">
+<div id="0bd6b23d" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate accuracy of k-means model</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>total_wines <span class="op">=</span> wine_data.shape[<span class="dv">0</span>]  <span class="co"># Total number of wines</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>correctly_classified <span class="op">=</span> <span class="dv">1469</span> <span class="op">+</span> <span class="dv">2323</span>  <span class="co"># Wines in correct clusters</span></span>
@@ -474,8 +477,10 @@ Silhouette Score: 0.4661285683358558</code></pre>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<p>Cortez, P., Cerdeira, A., Almeida, F., Matos, T., &amp; Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.<br>
-IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering GeeksforGeeks. (2024). K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/</p>
+<p>Coburn, K. (2024). Unsupervised learning: K-means clustering [Lecture]. University of California, Santa Barbara.</p>
+<p>Cortez, P., Cerdeira, A., Almeida, F., Matos, T., &amp; Reis, J. (2009). Wine Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.</p>
+<p>IBM. (n.d.). K-means clustering. Retrieved December 3, 2024, from https://www.ibm.com/topics/k-means-clustering GeeksforGeeks. (2024).</p>
+<p>K means Clustering - Introduction. Retrieved December 3, 2024, from https://www.geeksforgeeks.org/k-means-clustering-introduction/</p>
 </section>
 
 </main>
@@ -562,8 +567,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -674,7 +677,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
